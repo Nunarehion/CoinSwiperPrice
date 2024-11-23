@@ -11,17 +11,26 @@
 Сначала клонируйте репозиторий на свой компьютер. Откройте терминал и выполните следующую команду:
 
 ```bash
-git clone https://github.com/ваш_пользователь/ваш_репозиторий.git
-
-python -m venv venv
+git clone https://github.com/
 
 ```
+
 ### 2. активируйте Venv
+Теперь вам необходимо активировать переменное окржение Venv.
+для этого в vs code нажмите сочетнаие клавишь cntr+shift+p и выберетие пункт "Активировать" переменное окружение.
+Следйте инструкциям по активции переменной среды.
+Так же вы моежете сделать это через консоль
 ```bash
-python -m venv venv
-venv\Scripts\activate
+python -m venv .venv
+.venv\Scripts\Activate.ps1
 ```
+
 ### 2. Установите зависимости
 ```bash
 pip install -r requirements.txt
+```
+
+### Запустите проект
+```bash
+python -m run.py
 ```

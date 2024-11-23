@@ -1,5 +1,7 @@
-import os
 import json
-file_path = os.path.join('data', 'coins.json')
+import os
+
+file_path = os.path.join(os.path.dirname(__file__), '..', 'data', 'cryptocurrencies.json')
+
 with open(file_path, 'r', encoding='utf-8') as file:
-    data = json.load(file)
+    coins_data = json.load(file)
