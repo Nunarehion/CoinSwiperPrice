@@ -1,0 +1,38 @@
+{
+  "karrat":  {
+    "name": "Karrat",
+    "token": "0xacd2c239012d17beb128b0944d49015104113650"
+  },
+  "pro": {
+    "name": "Propy",
+    "token": "0x226bb599a12c826476e3a771454697ea52e9e220"
+  },
+    "fox": {
+      "name": "ShapeShift FOX",
+      "token": "0x226bb599a12c826476e3a771454697ea52e9e220"
+  },
+    "prime": {
+      "name": "Echelon Prime",
+      "token": "0xb23d80f5fefcddaa212212f028021b41ded428cf"
+  },
+  "mpl": {
+      "name": "Maple",
+      "token": "0x33349b282065b0284d756f0577fb39c158f935e6"
+  },
+    "00": {
+      "name": "00 Token",
+      "token": "0x881ba05de1e78f549cc63a8f6cabb1d4ad32250d"
+  },
+    "cro": {
+      "name": "Cronos",
+      "token": "0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b"
+  },
+    "aurrora": {
+      "name": "AuroraToken",
+      "token": "0x0c8c8ae8bc3a69dc8482c01ceacfb588bb516b01"
+  },
+    "abt": {
+      "name": "Arcblock",
+      "token": "0xb98d4c97425d9908e66e53a6fdf673acca0be986"
+  }
+}
