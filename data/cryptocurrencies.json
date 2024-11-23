@@ -2,42 +2,47 @@
   {
     "symbol": "karrat",
     "name": "Karrat",
-    "token": "0xacd2c239012d17beb128b0944d49015104113650"
+    "token": "0xAcd2c239012D17BEB128B0944D49015104113650"
+  },
+  {
+    "symbol": "swftc",
+    "name": "SWFTC",
+    "token": "0x0bb217E40F8a5Cb79Adf04E1aAb60E5abd0dfC1e"
   },
   {
     "symbol": "pro",
     "name": "Propy",
-    "token": "0x226bb599a12c826476e3a771454697ea52e9e220"
+    "token": "0x226bb599a12C826476e3A771454697EA52E9E220"
   },
   {
     "symbol": "fox",
     "name": "ShapeShift FOX",
-    "token": "0x226bb599a12c826476e3a771454697ea52e9e220"
+    "token": "0xc770EEfAd204B5180dF6a14Ee197D99d808ee52d"
   },
   {
     "symbol": "prime",
     "name": "Echelon Prime",
-    "token": "0xb23d80f5fefcddaa212212f028021b41ded428cf"
+    "token": "0xb23d80f5FefcDDaa212212F028021B41DEd428CF"
   },
   {
     "symbol": "mpl",
     "name": "Maple",
-    "token": "0x33349b282065b0284d756f0577fb39c158f935e6"
+    "token": "0x33349B282065b0284d756F0577FB39c158F935e6"
   },
   {
     "symbol": "00",
     "name": "00 Token",
-    "token": "0x881ba05de1e78f549cc63a8f6cabb1d4ad32250d"
+    "token": "0x881Ba05de1E78f549cC63a8f6Cabb1d4AD32250D"
   },
   {
     "symbol": "cro",
     "name": "Cronos",
-    "token": "0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b"
+    "token": "0xA0b73E1Ff0B80914AB6fe0444E65848C4C34450b"
   },
   {
-    "symbol": "aurrora",
+    "symbol": "aurora",
     "name": "AuroraToken",
-    "token": "0x0c8c8ae8bc3a69dc8482c01ceacfb588bb516b01"
+    "token": "0xAaAAAA20D9E0e2461697782ef11675f668207961"
   },
   {
     "symbol": "abt",
