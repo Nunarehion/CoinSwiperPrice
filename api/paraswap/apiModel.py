@@ -26,7 +26,7 @@ class ParaswapApi:
         
     def get_price(self,
                   tokens: List[str] = None, 
-                  amount: int = 0, 
+                  amount: int = 1000, 
                   side: Literal["BUY", "SELL"] = "BUY", 
                   network: Union[int, str] = '1', 
                   slippage: Union[int, str] = '1') -> Dict[str, Any]:
