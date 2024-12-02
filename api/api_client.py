@@ -10,9 +10,10 @@ from models.coin import CryptoData
 def get_all_price():
     all_data = []
     for coin in data.coins.coins_data:
+        print(coin)
         try:
             coinbase_price = float(coinbase.get_price(coin['symbol']))
-            uniswap_price = float(uniswap.get_price(coin['token']))
+            uniswap_price = float(paraswap.get_price(coin['address']))
             dif = uniswap_price - coinbase_price
             if dif != 0:
                 percentage_difference = (dif / coinbase_price) * 100
@@ -31,5 +32,5 @@ def get_all_price():
             all_data.append(crypto_data)
             time.sleep(1)
         except Exception as e:
-            print(e)
+            print("ERROR (FUNC GET_ALL_PRICE)::",e)
     return all_data
