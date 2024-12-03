@@ -1,6 +1,7 @@
 import requests
 from ..api_configure import config
-def get_price(coin_id: str) -> dict:
+
+def get_price(coin_id: str) -> float:
     url = config.coinbase.url.format(coin_id=coin_id)
     # print(url)
     response = requests.get(url)

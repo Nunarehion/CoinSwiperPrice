@@ -14,7 +14,7 @@ coin.list = [adict(name='uniswap', price=123),
 coin.difference = 3
 
 result = get_all_price()
-
+print(result)
 class mk:
     def __init__(self, st='', escape='true'):
         if escape:
@@ -88,8 +88,9 @@ from datetime import datetime
 API_TOKEN = '7116422869:AAG_j_sUrP6JGJ8IW2c38WWmWeDe6UcCd_A'
 bot = telebot.TeleBot(API_TOKEN)
 
-minimum = 100
+minimum = .5
 running = False
+print("BOT START")
 
 def escape_special(text):
     text = str(text)
@@ -115,14 +116,7 @@ def send_messages(chat_id):
                 + mk().indent()
 
         bot.send_message(chat_id, message, parse_mode='MarkdownV2')
-        time.sleep(5)
-
-import re
-
-
-
-
-
+        time.sleep(15)
 
 
 @bot.message_handler(commands=['start'])

@@ -10,7 +10,7 @@ class Coin:
 @dataclass
 class Exchange:
     name: str
-    price: int
+    price: str
 
 @dataclass
 class CryptoData:

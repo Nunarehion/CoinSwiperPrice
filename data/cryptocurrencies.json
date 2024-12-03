@@ -2,51 +2,65 @@
   {
     "symbol": "karrat",
     "name": "Karrat",
-    "token": "0xAcd2c239012D17BEB128B0944D49015104113650"
+    "address": "0xAcd2c239012D17BEB128B0944D49015104113650"
   },
   {
-    "symbol": "swftc",
-    "name": "SWFTC",
-    "token": "0x0bb217E40F8a5Cb79Adf04E1aAb60E5abd0dfC1e"
+    "symbol": "SWFTC",
+    "address": "0x0bb217e40f8a5cb79adf04e1aab60e5abd0dfc1e",
+    "decimals": 8,
+    "img": "https://cdn.paraswap.io/address/address.png",
+    "network": 1
   },
   {
-    "symbol": "pro",
-    "name": "Propy",
-    "token": "0x226bb599a12C826476e3A771454697EA52E9E220"
+    "symbol": "PRO",
+    "address": "0x226bb599a12c826476e3a771454697ea52e9e220",
+    "decimals": 8,
+    "img": "https://cdn.paraswap.io/address/address.png",
+    "network": 1
   },
   {
-    "symbol": "fox",
-    "name": "ShapeShift FOX",
-    "token": "0xc770EEfAd204B5180dF6a14Ee197D99d808ee52d"
+    "symbol": "FOX",
+    "address": "0xc770eefad204b5180df6a14ee197d99d808ee52d",
+    "decimals": 18,
+    "img": "https://cdn.paraswap.io/address/address.png",
+    "network": 1
   },
   {
     "symbol": "prime",
     "name": "Echelon Prime",
-    "token": "0xb23d80f5FefcDDaa212212F028021B41DEd428CF"
+    "address": "0xb23d80f5FefcDDaa212212F028021B41DEd428CF"
   },
   {
-    "symbol": "mpl",
-    "name": "Maple",
-    "token": "0x33349B282065b0284d756F0577FB39c158F935e6"
+    "symbol": "MPL",
+    "address": "0x33349b282065b0284d756f0577fb39c158f935e6",
+    "decimals": 18,
+    "img": "https://cdn.paraswap.io/address/address.png",
+    "network": 1
   },
   {
     "symbol": "00",
-    "name": "00 Token",
-    "token": "0x881Ba05de1E78f549cC63a8f6Cabb1d4AD32250D"
+    "name": "00 address",
+    "address": "0x881Ba05de1E78f549cC63a8f6Cabb1d4AD32250D"
   },
   {
-    "symbol": "cro",
-    "name": "Cronos",
-    "token": "0xA0b73E1Ff0B80914AB6fe0444E65848C4C34450b"
+    "symbol": "CRO",
+    "address": "0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b",
+    "decimals": 8,
+    "img": "https://cdn.paraswap.io/address/CRO.png",
+    "network": 1
   },
   {
-    "symbol": "aurora",
-    "name": "AuroraToken",
-    "token": "0xAaAAAA20D9E0e2461697782ef11675f668207961"
+    "symbol": "AURORA",
+    "address": "0xaaaaaa20d9e0e2461697782ef11675f668207961",
+    "decimals": 18,
+    "img": "https://cdn.paraswap.io/address/address.png",
+    "network": 1
   },
   {
-    "symbol": "abt",
-    "name": "Arcblock",
-    "token": "0xb98d4c97425d9908e66e53a6fdf673acca0be986"
+    "symbol": "ABT",
+    "address": "0xb98d4c97425d9908e66e53a6fdf673acca0be986",
+    "decimals": 18,
+    "img": "https://cdn.paraswap.io/address/ABT.png",
+    "network": 1
   }
 ]
