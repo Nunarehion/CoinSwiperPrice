@@ -6,15 +6,15 @@ from api.api_client import get_all_price
 from adict import adict
 
 emoji = adict({'warning': '\U0001F7E5', 'accept': '\U0001F7E9', 'up': '\U0001F53A', 'down': '\U0001F53B'})
-coin = adict()
-coin.percent = 10
-coin.symbol = 'BTC'
-coin.list = [adict(name='uniswap', price=123),
-              adict(name='coinbase', price=121)]
-coin.difference = 3
+# coin = adict()
+# coin.percent = 10
+# coin.symbol = 'BTC'
+# coin.list = [adict(name='uniswap', price=123),
+#               adict(name='coinbase', price=121)]
+# coin.difference = 3
 
-result = get_all_price()
-print(result)
+# result = get_all_price()
+# print(result)
 class mk:
     def __init__(self, st='', escape='true'):
         if escape:
@@ -84,11 +84,14 @@ import time
 import threading
 import re
 from datetime import datetime
+from threading import Timer
+from telebot import types
+
 
 API_TOKEN = '7116422869:AAG_j_sUrP6JGJ8IW2c38WWmWeDe6UcCd_A'
 bot = telebot.TeleBot(API_TOKEN)
 
-minimum = .5
+
 running = False
 print("BOT START")
 
@@ -104,7 +107,8 @@ def send_messages(chat_id):
     global minimum
     while running:
         current_date = datetime.now().strftime("[Календарь] %d/%m/%Y")
-        message = mk(current_date).code() + mk().indent() 
+        message = mk(current_date).code() + mk().indent()
+        result = get_all_price()
         for coin in result:
             message += mk(f'{emoji.warning if coin.percent < minimum else emoji.accept} ') \
                 - mk(f'\({escape_special(coin.percent)}\\%\) \#{coin.token}').bold() \
@@ -135,17 +139,68 @@ def stop_command(message):
     bot.reply_to(message, mk("Уведомления остановленны.    ").mono(), parse_mode='MarkdownV2')
     
     
+minimum = 0.5
+waiting_for_input = False
+user_id_waiting = None
+
+def cancel_input(message):
+    global waiting_for_input, user_id_waiting, input_message_id
+    waiting_for_input = False
+    user_id_waiting = None
+    if input_message_id:
+        bot.delete_message(message.chat.id, input_message_id)
+
 @bot.message_handler(commands=['setmin'])
 def set_min(message):
-    global minimum
+    global waiting_for_input, user_id_waiting, input_message_id
     text = message.text
-    match = re.search(r'(\d+(\.\d+)?)%', text)
+
+    match = re.search(r'(\d+(\.\d+)?)', text)
+    if match:
+        minimum = float(match.group(1))
+        bot.reply_to(message, f"Минимальный процент установлен на {minimum}%.")
+        return
+
+    if waiting_for_input:
+        bot.reply_to(message, "Вы уже находитесь в режиме ввода. Пожалуйста, введите число.")
+        return
+
+    waiting_for_input = True
+    user_id_waiting = message.from_user.id
+
+    markup = types.InlineKeyboardMarkup()
+    cancel_button = types.InlineKeyboardButton("Отмена", callback_data="cancel")
+    markup.add(cancel_button)
+
+    input_message = bot.send_message(message.chat.id, "Пожалуйста, введите минимальный процент:", reply_markup=markup)
+    input_message_id = input_message.message_id
+
+    Timer(10, cancel_input, [message]).start()
+
+@bot.message_handler(func=lambda message: waiting_for_input and message.from_user.id == user_id_waiting)
+def handle_input(message):
+    global minimum, waiting_for_input, user_id_waiting, input_message_id
+    text = message.text
+
+    match = re.search(r'(\d+(\.\d+)?)', text)
     
     if match:
         minimum = float(match.group(1))
-        bot.reply_to(message, mk(f"Минимальный процент установлен на {minimum}\%\.").code(), parse_mode='MarkdownV2')
+        bot.reply_to(message, f"Минимальный процент установлен на {minimum}%.")
+        waiting_for_input = False
+        user_id_waiting = None
+        if input_message_id:
+            try:
+                bot.delete_message(message.chat.id, input_message_id)
+            except telebot.apihelper.ApiTelegramException:
+                pass
     else:
-        bot.reply_to(message, mk("Пожалуйста, укажите корректный процент в формате 'число%'.").code(), parse_mode='MarkdownV2')
+        bot.reply_to(message, "Пожалуйста, укажите корректный процент в формате 'число%'.")
+
+@bot.callback_query_handler(func=lambda call: call.data == "cancel")
+def callback_cancel(call):
+    cancel_input(call.message)
+
 
 @bot.message_handler(commands=['help'])
 def help_command(message):
@@ -181,6 +236,29 @@ bot.set_my_commands([
     telebot.types.BotCommand("stop",  "Отключить уведомления"),
     telebot.types.BotCommand("help", "Справка"),
     telebot.types.BotCommand("setmin", "Задать минимальный процент"),
+    telebot.types.BotCommand("options", "Настройка"),
+    telebot.types.BotCommand("exit", "Выключить бота"),
 ])
+
+
+settings = ["Настройка 2", "Настройка 2"]
+
+@bot.message_handler(commands=['options'])
+def send_poll(message):
+    question = "Выберите настройки:"
+    options = settings
+    bot.send_poll(message.chat.id, question, options, is_anonymous=False, allows_multiple_answers=True)
+
+@bot.poll_answer_handler(func=lambda answer: True)
+def handle_poll_answer(answer):
+    selected_options = answer.option_ids
+    selected_settings = [settings[i] for i in selected_options]
+    bot.send_message(answer.user.id, f"Выбранные настройки: {', '.join(selected_settings)}")
+
+@bot.message_handler(commands=['exit'])
+def exit(message):
+    bot.reply_to(message, "Бот выключен")
+    exit()
+    
 
 bot.polling()
