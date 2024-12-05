@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from typing import List
 from models.coin import Exchange
 from models.coin import CryptoData
+from .paraswap.get_price import get_price
 
 def get_all_price() -> List[CryptoData]:
     """
@@ -25,7 +26,9 @@ def get_all_price() -> List[CryptoData]:
     for coin in data.coins.coins_data:
         try:
             coinbase_price = float(coinbase.get_price(coin['symbol']))
-            paraswap_price = float(paraswap.get_price(coin['address']))
+            paraswap_price1 = paraswap.get_price(coin['address'])
+            paraswap_price= float(paraswap_price1['price'])
+            gas_fee = float(paraswap_price1['gas_fee'])
             dif = paraswap_price - coinbase_price
             if dif != 0:
                 percentage_difference = (dif / coinbase_price) * 100
@@ -36,7 +39,8 @@ def get_all_price() -> List[CryptoData]:
                         symbol     = coin['address'],
                         exchanges  = sorted([
                                         Exchange(name="coinbase", price= f"{round(coinbase_price, 5):.5f}"),
-                                        Exchange(name="paraswap", price= f"{round(paraswap_price, 5):.5f}")
+                                        Exchange(name="paraswap", price= f"{round(paraswap_price, 5):.5f}"),
+                                        Exchange(name="paraswap_gas_fee", price=f"{round(gas_fee, 5):.5f}")
                                         ], key =lambda obj: obj.price ),
                         difference = abs(round(dif, 5)),
                         percent    = abs(round(percentage_difference, 5))

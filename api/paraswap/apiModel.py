@@ -3,6 +3,7 @@ from typing import List, Dict, Any, Literal, Union
 import requests
 import json
 from utils import adict
+from typing import List, Dict, Any, Literal, Union
 
 class ParaswapApi:
     def __init__(self):
@@ -11,7 +12,8 @@ class ParaswapApi:
             "pairs": self.url + "/pairs",
             "swap": self.url + "/swap",
             "prices": self.url + "/prices",
-            "tokens": self.url + '/tokens'
+            "tokens": self.url + '/tokens',
+            "gaz_fee": self.url + '/gaz_fee'
         }
         
     def get_tokens(self, network: Union[int, str] = 1):

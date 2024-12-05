@@ -9,8 +9,6 @@ import api
 import data.coins
 import time
 from api.api_client import get_all_price
-from bot.handler.regular_symbol import escape_special
-from bot.classes import mk
 
 from adict import adict
 

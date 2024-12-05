@@ -1,5 +1,6 @@
 from bot.__init__ import *
 from bot.utils import send_messages
+from bot.utils import mk
 @bot.message_handler(commands=['stop'])
 def stop_command(message):
     global running

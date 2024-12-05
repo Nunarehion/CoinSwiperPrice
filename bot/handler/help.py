@@ -1,8 +1,10 @@
 from bot.__init__ import *
 from bot.utils import send_messages
+from bot.utils import mk
 
 @bot.message_handler(commands=['help'])
 def help_command(message):
+    running_event.set()
     help_text = mk("Доступные команды:") \
         + mk().indent() \
         + mk("/start - Включить уведомления о изменениях цен на криптовалюты.") \
