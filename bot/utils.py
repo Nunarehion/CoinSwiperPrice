@@ -15,11 +15,12 @@ def send_messages(bot, chat_id, running, minimum):
             message += mk(f'{emoji.warning if coin.percent < minimum else emoji.accept} ') \
                 - mk(f'\({escape_special(coin.percent)}\\%\) \#{coin.token}').bold() \
                 + mk(f'{coin.exchanges[0].name}: {escape_special(coin.exchanges[0].price)}\$').mono().align() \
+                - mk(f'{escape_special(coin.exchanges[0].gas_fee) if coin.exchanges[0].gas_fee != None else "     "}')\
                 - emoji.up\
                 + mk(f'{coin.exchanges[1].name}: {escape_special(coin.exchanges[1].price)}\$').mono().align() \
+                - mk(f'{escape_special(coin.exchanges[0].gas_fee) if coin.exchanges[1].gas_fee != None else "     "}')\
                 - emoji.down\
                 + mk(f'Общая разница: {escape_special(coin.difference)}').bold()\
-                + mk(f'Газ: {escape_special(coin.exchanges[2].price)}\$').bold() \
                 + mk().indent()
 
         bot.send_message(chat_id, message, parse_mode='MarkdownV2')

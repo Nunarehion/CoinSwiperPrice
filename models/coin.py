@@ -11,6 +11,7 @@ class Coin:
 class Exchange:
     name: str
     price: str
+    gas_fee: str
 
 @dataclass
 class CryptoData:
