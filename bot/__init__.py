@@ -11,6 +11,7 @@ import time
 from api.api_client import get_all_price
 
 from adict import adict
+from dataclasses import dataclass
 
 emoji = adict({'warning': '\U0001F7E5', 'accept': '\U0001F7E9', 'up': '\U0001F53A', 'down': '\U0001F53B'})
 
@@ -24,3 +25,13 @@ minimum = 0.5
 waiting_for_input = False
 user_id_waiting = None
 running_event = threading.Event()
+
+@dataclass
+class UserState:
+    running: bool = False
+    minimum: float = 0.5
+    waiting_for_input: bool = False
+    user_id_waiting: str = None
+    running_event: threading.Event = threading.Event()
+    
+user_states = {}

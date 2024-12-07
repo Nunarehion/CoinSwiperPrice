@@ -40,12 +40,12 @@ def get_all_price() -> List[CryptoData]:
                         exchanges  = sorted([
                                         Exchange(name="coinbase", price= f"{round(coinbase_price, 5):.5f}", gas_fee=None),
                                         Exchange(name="paraswap", price= f"{round(paraswap_price, 5):.5f}", gas_fee=f"{round(gas_fee, 5):.5f}"),
-                                        ], key =lambda obj: obj.price ),
+                                        ], key =lambda obj: -float(obj.price) ),
                         difference = abs(round(dif, 5)),
                         percent    = abs(round(percentage_difference, 5))
             )
             all_data.append(crypto_data)
-            time.sleep(0.1)
+            #time.sleep(0.1)
         except Exception as e:
             print("ERROR (FUNC GET_ALL_PRICE)::", e)
     return all_data
