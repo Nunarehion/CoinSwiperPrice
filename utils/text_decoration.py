@@ -3,7 +3,7 @@ class mk:
         self.st: str = st
         
     def indent(self, n=1):
-        self.st += '\n'
+        self.st += '\n' * n
         return self
 
     def bold(self):

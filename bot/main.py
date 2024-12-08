@@ -4,6 +4,7 @@ from bot.handler.stop import *  # noqa: F403
 from bot.handler.exit import *  # noqa: F403
 from bot.handler.help import *  # noqa: F403
 from bot.handler.setmin import *  # noqa: F403
+from bot.handler.coins import *  # noqa: F403
 
 from bot.set_commands import set_my_commands
 
