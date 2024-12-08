@@ -1,4 +1,3 @@
-from bot.utils import mk
 from bot.__init__ import *
 
 @bot.message_handler(commands=['help'])

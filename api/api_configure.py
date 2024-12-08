@@ -10,6 +10,4 @@ config = utils.adict({
     "paraswap": {
         "url": "https://api.paraswap.io"
     },
-    
-
 })

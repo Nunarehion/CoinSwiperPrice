@@ -1,6 +1,5 @@
 from bot.__init__ import *
-from bot.utils import send_messages
-from bot.utils import mk
+from bot.handler.send import polling_price_update
 
 @bot.message_handler(commands=['start'])
 def start_command(message):
@@ -15,6 +14,6 @@ def start_command(message):
         bot.reply_to(message, mk("Уведомления включены.").mono(), parse_mode='HTML')
         user_state.running_event.set()
         user_state.running = True
-        threading.Thread(target=send_messages, args=(bot, user_id, user_state)).start()
+        threading.Thread(target=polling_price_update, args=(bot, user_id, user_state)).start()
     else:
         bot.reply_to(message, mk("Уведомления уже включены.").mono(), parse_mode='HTML')

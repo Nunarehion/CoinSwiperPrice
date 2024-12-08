@@ -3,7 +3,7 @@ from ..api_configure import config
 from .apiModel import ParaswapApi
 # import json
 
-def get_price(coin_id: str) -> float:
+def get_price(coin_id: str) -> dict:
     # print(coin_id)
     # print(json.dumps(data, indent=4))
     data = ParaswapApi().get_price(['0xdac17f958d2ee523a2206206994597c13d831ec7', coin_id])

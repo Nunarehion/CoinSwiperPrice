@@ -3,6 +3,7 @@ from bot import *  # noqa: F403
 def set_my_commands() -> None:
     """Описание команд в меню бота"""
     bot.set_my_commands([  # noqa: F405, F821
+        types.BotCommand("price", "Получить уведомления"),
         types.BotCommand("stop",  "Отключить уведомления"),
         types.BotCommand("start", "Включить уведомления"),
         types.BotCommand("help", "Справка"),
