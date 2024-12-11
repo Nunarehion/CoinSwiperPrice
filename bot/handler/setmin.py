@@ -52,6 +52,9 @@ def handle_input(message):
         user_state.input_message_id = None
     else:
         bot.reply_to(message, mk("Пожалуйста, укажите корректный процент в формате 'число%'.").code(), parse_mode='HTML')
+        # Сброс состояния ожидания ввода, если ввод некорректен
+        user_state.waiting_for_input = False
+
 
 def cancel_input(message):
     user_id = message.from_user.id

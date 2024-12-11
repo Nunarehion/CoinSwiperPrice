@@ -15,11 +15,6 @@ emoji = adict({'warning': '\U0001F7E5', 'accept': '\U0001F7E9', 'up': '\U0001F53
 API_TOKEN = '7116422869:AAG_j_sUrP6JGJ8IW2c38WWmWeDe6UcCd_A'
 bot = telebot.TeleBot(API_TOKEN)
 
-running = False
-minimum = 0.5
-waiting_for_input = False
-user_id_waiting = None
-running_event = threading.Event()
 
 @dataclass
 class UserState:
