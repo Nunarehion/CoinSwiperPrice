@@ -7,7 +7,7 @@ from dataclasses import dataclass
 from utils import mk
 import data.coins
 import re
-
+from typing import List
 
 
 emoji = adict({'warning': '\U0001F7E5', 'accept': '\U0001F7E9', 'up': '\U0001F53A', 'down': '\U0001F53B'})
@@ -26,3 +26,20 @@ class UserState:
     running_event: threading.Event = threading.Event()
     
 user_states = {}
+
+@dataclass
+class CryptoPortfolio:
+    percent: float
+    text: str
+@dataclass
+class FilterMode:
+    NEUTRAL: str = 'neutral'
+    POSITIVE: str = 'positive'
+    NEGATIVE: str = 'negative'
+    condition: str = NEUTRAL
+    def set_neutral(self):
+        self.condition = self.NEUTRAL
+    def set_positive(self):
+        self.condition = self.POSITIVE
+    def set_negative(self):
+        self.condition = self.NEGATIVE
