@@ -39,7 +39,7 @@ def price_command(message):
     loader_thread = threading.Thread(target=update_loading_message)
     loader_thread.start()
 
-    send_single_price_update(bot, user_id)
+    send_single_price_update(bot, user_id, filter_mode)
 
     stop_loading = True
     loader_thread.join()

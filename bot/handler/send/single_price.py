@@ -2,10 +2,10 @@ from datetime import datetime
 from api.api_client import get_all_price
 from bot.__init__ import *
 from bot.handler.filters import dataFilter
+from bot.handler.button import *
 
 
-
-def send_single_price_update(bot, chat_id):
+def send_single_price_update(bot, chat_id, filter_mode):
     current_date = datetime.now().strftime("[Календарь] %d/%m/%Y")
     message = mk(current_date).code() + mk().indent()
     result = get_all_price()
@@ -16,8 +16,6 @@ def send_single_price_update(bot, chat_id):
     arr = []
     print(f"Текущее состояние user_states: {user_states}")
     print(f"Текущее состояние minimum: {minimum}")
-    state = FilterMode()
-    state.set_negative()
     for coin in result:
             text = mk(f'{emoji.warning if coin.percent < minimum else emoji.accept} ') \
                 - mk(f'({coin.percent}%) #{coin.token}').bold() \
@@ -31,10 +29,32 @@ def send_single_price_update(bot, chat_id):
                 + mk().indent()
             instance = CryptoPortfolio(percent=coin.percent, text=text)
             arr.append(instance)
-    mod = FilterMode()
-    message += "".join([str(item.text) for item in arr if dataFilter(item, state)])
+    message += "".join([str(item.text) for item in arr if dataFilter(item, filter_mode)])
 
-    bot.send_message(chat_id, message, parse_mode='HTML')
+    keyboard = InlineKeyboardMarkup()
+
+    if filter_mode.condition == filter_mode.NEUTRAL:
+        keyboard.add(InlineKeyboardButton("Позитивный", callback_data='positive'))
+        keyboard.add(InlineKeyboardButton("Негативный", callback_data='negative'))
+    elif filter_mode.condition == filter_mode.POSITIVE:
+        keyboard.add(InlineKeyboardButton("Нейтральный", callback_data='neutral'))
+        keyboard.add(InlineKeyboardButton("Негативный", callback_data='negative'))
+    elif filter_mode.condition == filter_mode.NEGATIVE:
+         keyboard.add(InlineKeyboardButton("Нейтральный", callback_data='neutral'))
+         keyboard.add(InlineKeyboardButton("Позитивный", callback_data='positive'))
+
+    bot.send_message(chat_id, message, reply_markup=keyboard, parse_mode='HTML')
 
 
+@bot.callback_query_handler(func=lambda call: True)
+def button_handler(call: CallbackQuery):
+    global filter_mode
+    if call.data == 'positive':
+        filter_mode.set_positive()
+    elif call.data == 'negative':
+        filter_mode.set_negative()
+    elif call.data == 'neutral':
+        filter_mode.set_neutral()
 
+    send_single_price_update(bot, call.message.chat.id, filter_mode)
+    bot.answer_callback_query(call.id)

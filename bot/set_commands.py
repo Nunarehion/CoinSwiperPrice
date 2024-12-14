@@ -11,4 +11,5 @@ def set_my_commands() -> None:
         types.BotCommand("setmin",   "Задать минимальный процент"),
         types.BotCommand("options",  "Настройка"),
         types.BotCommand("exit",     "Выключить бота"),
+        types.BotCommand("filters",  "Настройка фильтрации"),
     ])

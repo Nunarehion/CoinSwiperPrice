@@ -8,6 +8,8 @@ from utils import mk
 import data.coins
 import re
 from typing import List
+import telebot
+from telebot.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
 
 
 emoji = adict({'warning': '\U0001F7E5', 'accept': '\U0001F7E9', 'up': '\U0001F53A', 'down': '\U0001F53B'})
@@ -43,3 +45,5 @@ class FilterMode:
         self.condition = self.POSITIVE
     def set_negative(self):
         self.condition = self.NEGATIVE
+
+filter_mode = FilterMode()
