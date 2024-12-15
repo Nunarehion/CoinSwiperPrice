@@ -35,11 +35,14 @@ def price_command(message):
                     break
                 bot.edit_message_text(chat_id=user_id, message_id=loading_message.message_id, text=text)
                 time.sleep(0.5)
-
+    user_state = user_states.get(user_id)
+    if user_state is None:
+        user_state = UserState()
+        user_states[user_id] = user_state
     loader_thread = threading.Thread(target=update_loading_message)
     loader_thread.start()
 
-    send_single_price_update(bot, user_id, filter_mode)
+    send_single_price_update(bot, user_id)
 
     stop_loading = True
     loader_thread.join()

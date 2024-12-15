@@ -1,7 +1,6 @@
 from bot.__init__ import *
 
-
-
+user_states = {}  
 
 @bot.message_handler(commands=['filters'])
 def filters(message):
@@ -19,10 +18,17 @@ def filters(message):
     
     bot.send_message(message.chat.id, text.code(), reply_markup=keyboard, parse_mode='HTML')
 
-
 @bot.callback_query_handler(func=lambda call: True)
 def button_handler(call: CallbackQuery):
-    global filter_mode
+    # Получаем состояние пользователя из user_states
+    user_state = user_states.get(call.message.chat.id)
+    
+    # Если состояние пользователя еще не инициализировано, создаем его
+    if user_state is None:
+        user_state = UserState()
+        user_states[call.message.chat.id] = user_state
+
+    filter_mode = user_state.filter_mode
     if call.data == 'neutral':
         filter_mode.set_neutral()
     elif call.data == 'positive':

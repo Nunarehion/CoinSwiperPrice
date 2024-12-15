@@ -5,7 +5,7 @@ from bot.handler.filters import dataFilter
 from bot.handler.button import *
 
 
-def send_single_price_update(bot, chat_id, filter_mode):
+def send_single_price_update(bot, chat_id):
     current_date = datetime.now().strftime("[Календарь] %d/%m/%Y")
     message = mk(current_date).code() + mk().indent()
     result = get_all_price()
@@ -13,6 +13,7 @@ def send_single_price_update(bot, chat_id, filter_mode):
     if chat_id not in user_states:
         user_states[chat_id] = UserState()
     minimum = user_states[chat_id].minimum
+    filter_mode = user_states[chat_id].filter_mode
     arr = []
     print(f"Текущее состояние user_states: {user_states}")
     print(f"Текущее состояние minimum: {minimum}")
@@ -45,10 +46,10 @@ def send_single_price_update(bot, chat_id, filter_mode):
 
     bot.send_message(chat_id, message, reply_markup=keyboard, parse_mode='HTML')
 
-
 @bot.callback_query_handler(func=lambda call: True)
 def button_handler(call: CallbackQuery):
-    global filter_mode
+    user_state = user_states[call.message.chat.id]
+    filter_mode = user_state.filter_mode
     if call.data == 'positive':
         filter_mode.set_positive()
     elif call.data == 'negative':
@@ -56,5 +57,5 @@ def button_handler(call: CallbackQuery):
     elif call.data == 'neutral':
         filter_mode.set_neutral()
 
-    send_single_price_update(bot, call.message.chat.id, filter_mode)
+    send_single_price_update(bot, call.message.chat.id)
     bot.answer_callback_query(call.id)
