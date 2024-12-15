@@ -44,21 +44,7 @@ def send_single_price_update(bot, chat_id):
          keyboard.add(InlineKeyboardButton("Нейтральный", callback_data='neutral'))
          keyboard.add(InlineKeyboardButton("Позитивный", callback_data='positive'))
 
-    bot.send_message(chat_id, message, reply_markup=keyboard, parse_mode='HTML')
     message =  bot.send_message(chat_id, message, reply_markup=keyboard, parse_mode='HTML')
     message_id = message.message_id
     user_states[chat_id].cash[message_id] = arr
 
-@bot.callback_query_handler(func=lambda call: True)
-def button_handler(call: CallbackQuery):
-    user_state = user_states[call.message.chat.id]
-    filter_mode = user_state.filter_mode
-    if call.data == 'positive':
-        filter_mode.set_positive()
-    elif call.data == 'negative':
-        filter_mode.set_negative()
-    elif call.data == 'neutral':
-        filter_mode.set_neutral()
-
-    send_single_price_update(bot, call.message.chat.id)
-    bot.answer_callback_query(call.id)
