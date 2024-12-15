@@ -7,7 +7,7 @@ from dataclasses import dataclass, field
 from utils import mk
 import data.coins
 import re
-from typing import List
+from typing import List, Dict
 import telebot
 from telebot.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
 
@@ -46,6 +46,7 @@ class UserState:
     time_delay: int = 30 #временная задержка при отправке множества сообщений.
     waiting_for_input: bool = False
     user_id_waiting: str = None
+    cash: Dict = field(default_factory=dict)
     filter_mode: FilterMode = field(default_factory=FilterMode)
     running_event: threading.Event = threading.Event()
 

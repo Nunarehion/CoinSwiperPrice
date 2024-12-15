@@ -45,6 +45,9 @@ def send_single_price_update(bot, chat_id):
          keyboard.add(InlineKeyboardButton("Позитивный", callback_data='positive'))
 
     bot.send_message(chat_id, message, reply_markup=keyboard, parse_mode='HTML')
+    message =  bot.send_message(chat_id, message, reply_markup=keyboard, parse_mode='HTML')
+    message_id = message.message_id
+    user_states[chat_id].cash[message_id] = arr
 
 @bot.callback_query_handler(func=lambda call: True)
 def button_handler(call: CallbackQuery):
