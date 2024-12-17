@@ -34,7 +34,7 @@ def button_handler(call: CallbackQuery):
         filter_mode.set_negative()
     current_date = datetime.now().strftime("[Календарь] %d/%m/%Y")
     message = mk(current_date).code() + mk().indent()
-    message += "".join([str(item.text) for item in user_states[chat_id].cash[call.message.message_id] if dataFilter(item, filter_mode)])
+    message += "".join([str(item.text) for item in user_states[chat_id].cash[call.message.message_id] if dataFilter(item, filter_mode, user_states[chat_id])])
 
     bot.answer_callback_query(call.id) 
     bot.edit_message_text(text=message, chat_id=call.message.chat.id, message_id=call.message.message_id, parse_mode='HTML', reply_markup=call.message.reply_markup)

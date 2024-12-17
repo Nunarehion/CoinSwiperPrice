@@ -2,19 +2,19 @@ from datetime import datetime
 from api.api_client import get_all_price
 from bot.__init__ import *
 from bot.handler.filters import dataFilter
-from bot.handler.button import *
+from bot.handler.callback_price_button import *
 
 
 def send_single_price_update(bot, chat_id):
     current_date = datetime.now().strftime("[Календарь] %d/%m/%Y")
-    message = mk(current_date).code() + mk().indent()
+    header = mk(current_date).code() + mk().indent()
     result = get_all_price()
     # Инициализируем состояние пользователя, если его еще нет
     if chat_id not in user_states:
         user_states[chat_id] = UserState()
     minimum = user_states[chat_id].minimum
     filter_mode = user_states[chat_id].filter_mode
-    arr = []
+    arr_crypto = []
     print(f"Текущее состояние user_states: {user_states}")
     print(f"Текущее состояние minimum: {minimum}")
     for coin in result:
@@ -27,11 +27,13 @@ def send_single_price_update(bot, chat_id):
                 - mk(f' ({round(float(coin.exchanges[1].gas_fee), 1) if coin.exchanges[1].gas_fee else "--.-"}$)').mono() \
                 - emoji.down \
                 + mk(f'Спред: {round(float(coin.difference), 4)}$').bold() \
-                + mk().indent()
+                + mk().indent() 
             instance = CryptoPortfolio(percent=coin.percent, text=text)
-            arr.append(instance)
-    message += "".join([str(item.text) for item in arr if dataFilter(item, filter_mode)])
-
+            arr_crypto.append(instance)
+    cash_message = CashLargeMessage(header=header, messages=arr_crypto, filter_mode=filter_mode)
+    filtered_message = cash_message.load_cash(user_states[chat_id])
+    message = cash_message.header
+    message += filtered_message
     keyboard = InlineKeyboardMarkup()
 
     if filter_mode.condition == filter_mode.NEUTRAL:
@@ -46,5 +48,5 @@ def send_single_price_update(bot, chat_id):
 
     message =  bot.send_message(chat_id, message, reply_markup=keyboard, parse_mode='HTML')
     message_id = message.message_id
-    user_states[chat_id].cash[message_id] = arr
+    user_states[chat_id].cash[message_id] = arr_crypto
 
