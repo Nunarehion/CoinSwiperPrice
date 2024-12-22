@@ -3,8 +3,6 @@ from bot.__init__ import *
 @bot.message_handler(commands=['setmin'])
 def set_min(message):
     user_id = message.from_user.id
-
-    # Инициализируем состояние пользователя, если его еще нет
     if user_id not in user_states:
         user_states[user_id] = UserState()
 
@@ -52,7 +50,6 @@ def handle_input(message):
         user_state.input_message_id = None
     else:
         bot.reply_to(message, mk("Пожалуйста, укажите корректный процент в формате 'число%'.").code(), parse_mode='HTML')
-        # Сброс состояния ожидания ввода, если ввод некорректен
         user_state.waiting_for_input = False
 
 

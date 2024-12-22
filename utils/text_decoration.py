@@ -50,4 +50,3 @@ class mk:
             return mk(self.st + other.st)
         return mk(self.st + str(other))
     
-print("kukamongo")

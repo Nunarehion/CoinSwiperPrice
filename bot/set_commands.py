@@ -5,7 +5,7 @@ def set_my_commands() -> None:
     bot.set_my_commands([  # noqa: F405, F821
         types.BotCommand("price",    "Получить уведомления"),
         types.BotCommand("stop",     "Отключить уведомления"),
-        types.BotCommand("start",    "Включить уведомления"),
+        types.BotCommand("push",    "Включить уведомления"),
         types.BotCommand("coins",    "Получите список всех монет"),
         types.BotCommand("help",     "Справка"),
         types.BotCommand("setmin",   "Задать минимальный процент"),

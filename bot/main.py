@@ -1,5 +1,5 @@
 from bot.handler.price import *  # noqa: F403
-from bot.handler.start import *  # noqa: F403
+from bot.handler.push import *  # noqa: F403
 from bot.handler.stop import *  # noqa: F403
 from bot.handler.exit import *  # noqa: F403
 from bot.handler.help import *  # noqa: F403

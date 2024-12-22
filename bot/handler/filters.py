@@ -1,11 +1,20 @@
-from api.api_client import get_all_price
+
+from bot.__init__ import *
 
 
-def dataFilter(item, filter_mode, user_state) -> bool:
-    match filter_mode.condition:
-        case filter_mode.NEUTRAL:
-            return item
-        case filter_mode.POSITIVE:
-            return item.percent >= user_state.minimum
-        case filter_mode.NEGATIVE:
-            return item.percent <= user_state.minimum
+@bot.message_handler(commands=['filters'])
+def filters(message):
+    text = (
+        mk("Доступные режимы фильтрации:").indent() \
+        + mk("1. Нейтральный: не влияет на результаты.").indent() \
+        + mk("2. Позитивный: фильтрует положительные результаты.").indent() \
+        + mk("3. Негативный: фильтрует отрицательные результаты.").indent() \
+        + mk("Выберите режим фильтрации, нажав на соответствующую кнопку ниже:")
+    )
+    keyboard = InlineKeyboardMarkup()
+    callbackGroup = "global_"
+    keyboard.add(InlineKeyboardButton("Нейтральный", callback_data=  callbackGroup + FilterMode.NEUTRAL))
+    keyboard.add(InlineKeyboardButton("Позитивный",  callback_data=  callbackGroup + FilterMode.POSITIVE))
+    keyboard.add(InlineKeyboardButton("Негативный",  callback_data=  callbackGroup + FilterMode.NEGATIVE))
+    
+    bot.send_message(message.chat.id, text.code(), reply_markup=keyboard, parse_mode='HTML')

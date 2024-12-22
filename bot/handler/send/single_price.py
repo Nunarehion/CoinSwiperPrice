@@ -9,14 +9,13 @@ def send_single_price_update(bot, chat_id):
     current_date = datetime.now().strftime("[Календарь] %d/%m/%Y")
     header = mk(current_date).code() + mk().indent()
     result = get_all_price()
-    # Инициализируем состояние пользователя, если его еще нет
+    
     if chat_id not in user_states:
         user_states[chat_id] = UserState()
     minimum = user_states[chat_id].minimum
     filter_mode = user_states[chat_id].filter_mode
+    
     arr_crypto = []
-    print(f"Текущее состояние user_states: {user_states}")
-    print(f"Текущее состояние minimum: {minimum}")
     for coin in result:
             text = mk(f'{emoji.warning if coin.percent < minimum else emoji.accept} ') \
                 - mk(f'({coin.percent}%) #{coin.token}').bold() \
@@ -28,25 +27,28 @@ def send_single_price_update(bot, chat_id):
                 - emoji.down \
                 + mk(f'Спред: {round(float(coin.difference), 4)}$').bold() \
                 + mk().indent() 
-            instance = CryptoPortfolio(percent=coin.percent, text=text)
+            instance = TextChunk(percent=coin.percent, text=text)
             arr_crypto.append(instance)
+            
     cash_message = CashLargeMessage(header=header, messages=arr_crypto, filter_mode=filter_mode)
+    
     filtered_message = cash_message.load_cash(user_states[chat_id])
     message = cash_message.header
     message += filtered_message
+    
     keyboard = InlineKeyboardMarkup()
-
     if filter_mode.condition == filter_mode.NEUTRAL:
-        keyboard.add(InlineKeyboardButton("Позитивный", callback_data='positive'))
-        keyboard.add(InlineKeyboardButton("Негативный", callback_data='negative'))
+        keyboard.add(InlineKeyboardButton("Позитивный", callback_data= 'cash_' + filter_mode.POSITIVE))
+        keyboard.add(InlineKeyboardButton("Негативный", callback_data= 'cash_' + filter_mode.NEGATIVE))
     elif filter_mode.condition == filter_mode.POSITIVE:
-        keyboard.add(InlineKeyboardButton("Нейтральный", callback_data='neutral'))
-        keyboard.add(InlineKeyboardButton("Негативный", callback_data='negative'))
+        keyboard.add(InlineKeyboardButton("Нейтральный", callback_data= 'cash_' + filter_mode.NEUTRAL))
+        keyboard.add(InlineKeyboardButton("Негативный", callback_data= 'cash_' + filter_mode.NEGATIVE))
     elif filter_mode.condition == filter_mode.NEGATIVE:
-         keyboard.add(InlineKeyboardButton("Нейтральный", callback_data='neutral'))
-         keyboard.add(InlineKeyboardButton("Позитивный", callback_data='positive'))
+         keyboard.add(InlineKeyboardButton("Нейтральный", callback_data= 'cash_' + filter_mode.NEUTRAL))
+         keyboard.add(InlineKeyboardButton("Позитивный", callback_data= 'cash_' + filter_mode.POSITIVE))
 
     message =  bot.send_message(chat_id, message, reply_markup=keyboard, parse_mode='HTML')
     message_id = message.message_id
-    user_states[chat_id].cash[message_id] = arr_crypto
+    
+    user_states[chat_id].cash[message_id] = cash_message
 
